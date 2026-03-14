@@ -16,7 +16,8 @@ class CreateStockLedgersTable extends Migration
             $table->string('from')->nullable();
             $table->string('to')->nullable();
             $table->decimal('qty', 10, 2);
-            $table->unsignedBigInteger('reference_id');
+            $table->unsignedBigInteger('reference_id')->nullable();
+            $table->string('reference_type')->nullable();
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

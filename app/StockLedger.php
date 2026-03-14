@@ -4,7 +4,7 @@ namespace App;
 
 class StockLedger extends BaseModel
 {
-    protected $fillable = ['date', 'product_id', 'operation', 'from', 'to', 'qty', 'reference_id'];
+    protected $fillable = ['date', 'product_id', 'operation', 'from', 'to', 'qty', 'reference_id', 'reference_type'];
 
     const OPERATION_RECEIPT    = 'receipt';
     const OPERATION_TRANSFER   = 'transfer';
