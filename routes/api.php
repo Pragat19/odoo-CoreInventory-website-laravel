@@ -4,6 +4,7 @@ use App\Constants\EndPoints;
 use App\Http\Controllers\Api\MasterCategoryController;
 use App\Http\Controllers\Api\MasterUnitController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ReceiptController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,13 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get(EndPoints::product_show,     [ProductController::class, 'show']);
     Route::post(EndPoints::product_update,  [ProductController::class, 'update']);
     Route::post(EndPoints::product_delete,  [ProductController::class, 'destroy']);
+
+    // Receipt CRUD
+    Route::get(EndPoints::receipt_list,     [ReceiptController::class, 'index']);
+    Route::post(EndPoints::receipt_store,   [ReceiptController::class, 'store']);
+    Route::get(EndPoints::receipt_show,     [ReceiptController::class, 'show']);
+    Route::post(EndPoints::receipt_update,  [ReceiptController::class, 'update']);
+    Route::post(EndPoints::receipt_delete,  [ReceiptController::class, 'destroy']);
 });
 
 // Middleware Fallback Routes

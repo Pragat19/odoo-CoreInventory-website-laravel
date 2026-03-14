@@ -64,6 +64,17 @@ class EndPoints
 
     /**
      * ========================================================================
+     * Receipt Services
+     * ========================================================================
+     */
+    const receipt_list   = '/receipt/list';
+    const receipt_store  = '/receipt/store';
+    const receipt_show   = '/receipt/show/{id}';
+    const receipt_update = '/receipt/update/{id}';
+    const receipt_delete = '/receipt/delete/{id}';
+
+    /**
+     * ========================================================================
      * Middeleware Route
      * ========================================================================
      */
