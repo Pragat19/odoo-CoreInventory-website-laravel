@@ -7,6 +7,7 @@ use App\Constants\ResponseCodes;
 use App\Http\Controllers\BaseController;
 use App\Product;
 use App\Receipt;
+use App\StockLedger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -36,6 +37,15 @@ class ReceiptController extends BaseController
         DB::transaction(function () use ($request, &$receipt) {
             $receipt = Receipt::create($request->only('supplier_name', 'product_id', 'qty'));
             Product::where('id', $request->product_id)->increment('stock_qty', $request->qty);
+            StockLedger::create([
+                'date'         => now()->toDateString(),
+                'product_id'   => $request->product_id,
+                'operation'    => StockLedger::OPERATION_RECEIPT,
+                'from'         => $receipt->supplier_name,
+                'to'           => null,
+                'qty'          => $request->qty,
+                'reference_id' => $receipt->id,
+            ]);
         });
 
         $this->addSuccessResultKeyValue(Keys::DATA, $receipt->load('product'));

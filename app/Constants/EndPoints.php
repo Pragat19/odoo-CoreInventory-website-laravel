@@ -87,6 +87,48 @@ class EndPoints
 
     /**
      * ========================================================================
+     * Warehouse Services
+     * ========================================================================
+     */
+    const warehouse_list   = '/warehouse/list';
+    const warehouse_store  = '/warehouse/store';
+    const warehouse_show   = '/warehouse/show/{id}';
+    const warehouse_update = '/warehouse/update/{id}';
+    const warehouse_delete = '/warehouse/delete/{id}';
+
+    /**
+     * ========================================================================
+     * Internal Transfer Services
+     * ========================================================================
+     */
+    const internal_transfer_list         = '/internal-transfer/list';
+    const internal_transfer_store        = '/internal-transfer/store';
+    const internal_transfer_show         = '/internal-transfer/show/{id}';
+    const internal_transfer_update       = '/internal-transfer/update/{id}';
+    const internal_transfer_delete       = '/internal-transfer/delete/{id}';
+    const internal_transfer_changeStatus = '/internal-transfer/change-status/{id}';
+
+    /**
+     * ========================================================================
+     * Stock Adjustment Services
+     * ========================================================================
+     */
+    const stock_adjustment_list         = '/stock-adjustment/list';
+    const stock_adjustment_store        = '/stock-adjustment/store';
+    const stock_adjustment_show         = '/stock-adjustment/show/{id}';
+    const stock_adjustment_update       = '/stock-adjustment/update/{id}';
+    const stock_adjustment_delete       = '/stock-adjustment/delete/{id}';
+    const stock_adjustment_changeStatus = '/stock-adjustment/change-status/{id}';
+
+    /**
+     * ========================================================================
+     * Stock Ledger Services
+     * ========================================================================
+     */
+    const stock_ledger_list = '/stock-ledger/list';
+
+    /**
+     * ========================================================================
      * Middeleware Route
      * ========================================================================
      */

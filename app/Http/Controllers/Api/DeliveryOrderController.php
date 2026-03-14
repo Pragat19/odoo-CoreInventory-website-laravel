@@ -7,6 +7,7 @@ use App\Constants\ResponseCodes;
 use App\DeliveryOrder;
 use App\Http\Controllers\BaseController;
 use App\Product;
+use App\StockLedger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -56,6 +57,16 @@ class DeliveryOrderController extends BaseController
             if ($status === DeliveryOrder::STATUS_DELIVERED) {
                 Product::where('id', $request->product_id)->decrement('stock_qty', $request->qty);
             }
+
+            StockLedger::create([
+                'date'         => now()->toDateString(),
+                'product_id'   => $request->product_id,
+                'operation'    => StockLedger::OPERATION_DELIVERY,
+                'from'         => null,
+                'to'           => $order->customer_name,
+                'qty'          => $request->qty,
+                'reference_id' => $order->id,
+            ]);
         });
 
         $this->addSuccessResultKeyValue(Keys::DATA, $order->load('product'));
@@ -175,6 +186,15 @@ class DeliveryOrderController extends BaseController
             // Deduct stock if moving to delivered
             if ($newStatus === DeliveryOrder::STATUS_DELIVERED) {
                 Product::where('id', $order->product_id)->decrement('stock_qty', $order->qty);
+                StockLedger::create([
+                    'date'         => now()->toDateString(),
+                    'product_id'   => $order->product_id,
+                    'operation'    => StockLedger::OPERATION_DELIVERY,
+                    'from'         => null,
+                    'to'           => $order->customer_name,
+                    'qty'          => $order->qty,
+                    'reference_id' => $order->id,
+                ]);
             }
 
             $order->update(['status' => $newStatus]);
