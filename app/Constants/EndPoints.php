@@ -75,6 +75,18 @@ class EndPoints
 
     /**
      * ========================================================================
+     * Delivery Order Services
+     * ========================================================================
+     */
+    const delivery_order_list         = '/delivery-order/list';
+    const delivery_order_store        = '/delivery-order/store';
+    const delivery_order_show         = '/delivery-order/show/{id}';
+    const delivery_order_update       = '/delivery-order/update/{id}';
+    const delivery_order_delete       = '/delivery-order/delete/{id}';
+    const delivery_order_changeStatus = '/delivery-order/change-status/{id}';
+
+    /**
+     * ========================================================================
      * Middeleware Route
      * ========================================================================
      */

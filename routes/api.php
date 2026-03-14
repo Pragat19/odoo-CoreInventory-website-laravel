@@ -1,6 +1,7 @@
 <?php
 
 use App\Constants\EndPoints;
+use App\Http\Controllers\Api\DeliveryOrderController;
 use App\Http\Controllers\Api\MasterCategoryController;
 use App\Http\Controllers\Api\MasterUnitController;
 use App\Http\Controllers\Api\ProductController;
@@ -45,6 +46,14 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get(EndPoints::receipt_show,     [ReceiptController::class, 'show']);
     Route::post(EndPoints::receipt_update,  [ReceiptController::class, 'update']);
     Route::post(EndPoints::receipt_delete,  [ReceiptController::class, 'destroy']);
+
+    // Delivery Order CRUD
+    Route::get(EndPoints::delivery_order_list,         [DeliveryOrderController::class, 'index']);
+    Route::post(EndPoints::delivery_order_store,       [DeliveryOrderController::class, 'store']);
+    Route::get(EndPoints::delivery_order_show,         [DeliveryOrderController::class, 'show']);
+    Route::post(EndPoints::delivery_order_update,      [DeliveryOrderController::class, 'update']);
+    Route::post(EndPoints::delivery_order_delete,      [DeliveryOrderController::class, 'destroy']);
+    Route::post(EndPoints::delivery_order_changeStatus,[DeliveryOrderController::class, 'changeStatus']);
 });
 
 // Middleware Fallback Routes
