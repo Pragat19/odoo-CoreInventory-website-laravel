@@ -6,6 +6,8 @@ use App\Constants\Keys;
 use App\Constants\ResponseCodes;
 use App\Http\Controllers\BaseController;
 use App\Product;
+use App\StockLedger;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -34,6 +36,19 @@ class ProductController extends BaseController
         }
 
         $product = Product::create($request->only('name', 'sku', 'category_id', 'unit_id', 'stock_qty'));
+
+        if ($product->stock_qty > 0) {
+            StockLedger::create([
+                'date'           => Carbon::today(),
+                'product_id'     => $product->id,
+                'operation'      => StockLedger::OPERATION_RECEIPT,
+                'from'           => null,
+                'to'             => null,
+                'qty'            => $product->stock_qty,
+                'reference_id'   => $product->id,
+                'reference_type' => 'product_opening',
+            ]);
+        }
 
         $this->addSuccessResultKeyValue(Keys::DATA, $product->load('category', 'unit'));
         $this->setSuccessMessage('Product created successfully.');

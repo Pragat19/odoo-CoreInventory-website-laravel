@@ -102,6 +102,7 @@ class StockAdjustmentController extends BaseController
             'product_id'  => 'sometimes|integer|exists:products,id',
             'location_id' => 'sometimes|integer|exists:warehouses,id',
             'counted'     => 'sometimes|numeric|min:0',
+            'status'      => 'sometimes|in:draft,validated,cancelled',
         ]);
 
         if ($validator->fails()) {
@@ -110,15 +111,34 @@ class StockAdjustmentController extends BaseController
 
         $productId  = $request->input('product_id', $adjustment->product_id);
         $counted    = $request->input('counted', $adjustment->counted);
+        $newStatus  = $request->input('status', $adjustment->status);
         $product    = Product::find($productId);
         $difference = $counted - $product->stock_qty;
 
-        $adjustment->update([
-            'product_id'  => $productId,
-            'location_id' => $request->input('location_id', $adjustment->location_id),
-            'counted'     => $counted,
-            'difference'  => $difference,
-        ]);
+        DB::transaction(function () use ($request, $adjustment, $product, $productId, $counted, $difference, $newStatus) {
+            $adjustment->update([
+                'product_id'  => $productId,
+                'location_id' => $request->input('location_id', $adjustment->location_id),
+                'counted'     => $counted,
+                'difference'  => $difference,
+                'status'      => $newStatus,
+            ]);
+
+            if ($newStatus === StockAdjustment::STATUS_VALIDATED) {
+                $product->update(['stock_qty' => $counted]);
+
+                StockLedger::create([
+                    'date'           => now()->toDateString(),
+                    'product_id'     => $productId,
+                    'operation'      => StockLedger::OPERATION_ADJUSTMENT,
+                    'from'           => null,
+                    'to'             => $adjustment->location->name,
+                    'qty'            => $difference,
+                    'reference_id'   => $adjustment->id,
+                    'reference_type' => 'stock_adjustment',
+                ]);
+            }
+        });
 
         $this->addSuccessResultKeyValue(Keys::DATA, $adjustment->fresh()->load('product', 'location'));
         $this->setSuccessMessage('Stock adjustment updated successfully.');
