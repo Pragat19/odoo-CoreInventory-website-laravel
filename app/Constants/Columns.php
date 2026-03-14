@@ -1,0 +1,57 @@
+<?php
+
+
+namespace App\Constants;
+
+
+class Columns
+{
+
+    /**
+     * Common Columns
+     */
+    const id = 'id';
+    const status = 'status';
+    const image_url = 'image_url';
+    const record_deleted = 'record_deleted';
+    const name = 'name';
+    const is_active = 'is_active';
+    const value = 'value';
+    const old_password = "old_password";
+    const new_password = 'new_password';
+    const confirm_password = 'confirm_password';
+    const remember_token = 'remember_token';
+    const updated_at = 'updated_at';
+    const created_at = 'created_at';
+
+
+    /**
+     * Foreigns Key Columns
+     */
+    const user_id = 'user_id';
+    const category_id = 'category_id';
+    const product_id = 'product_id';
+    const setting_id = 'setting_id';
+
+
+    /**
+     * Tables::USERS Table Columns
+     */
+    const first_name = 'first_name';
+    const last_name = 'last_name';
+    const business_name = 'business_name';
+    const email = 'email';
+    const phone = 'phone';
+    const email_verified_at = 'email_verified_at';
+    const password = 'password';
+    const fcm_token = 'fcm_token';
+    const is_admin = 'is_admin';
+
+
+    /**
+     * Tables::PASSWORD_RESET Table Columns
+     */
+    const token = 'token';
+
+
+}
