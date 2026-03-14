@@ -180,6 +180,41 @@ class UserController extends BaseController
         return $this->sendSuccessResult();
     }
 
+    public function profile(Request $request)
+    {
+        $this->addSuccessResultKeyValue(Keys::USER, Auth::user());
+        $this->setSuccessMessage('Profile fetched successfully.');
+        return $this->sendSuccessResult();
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        $validator = Validator::make($request->all(), [
+            'name'  => 'sometimes|string|max:100',
+            'phone' => 'sometimes|nullable|string|max:15',
+            'email' => 'sometimes|email|unique:users,email,' . $user->id,
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendValidationError($validator->errors());
+        }
+
+        $user->update($request->only('name', 'email', 'phone'));
+
+        $this->addSuccessResultKeyValue(Keys::USER, $user->fresh());
+        $this->setSuccessMessage('Profile updated successfully.');
+        return $this->sendSuccessResult();
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+        $this->setSuccessMessage('Logged out successfully.');
+        return $this->sendSuccessResult();
+    }
+
     function unauthorised()
     {
         $this->addFailResultKeyValue(Keys::ERROR, 'Unauthorised User');

@@ -1,6 +1,7 @@
 <?php
 
 use App\Constants\EndPoints;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DeliveryOrderController;
 use App\Http\Controllers\Api\InternalTransferController;
 use App\Http\Controllers\Api\MasterCategoryController;
@@ -23,6 +24,9 @@ Route::post(EndPoints::user_resetPassword,    [UserController::class, 'resetPass
 // Protected Routes
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post(EndPoints::user_changePassword, [UserController::class, 'changePassword']);
+    Route::get(EndPoints::user_profile,          [UserController::class, 'profile']);
+    Route::post(EndPoints::user_updateProfile,   [UserController::class, 'updateProfile']);
+    Route::post(EndPoints::user_logout,          [UserController::class, 'logout']);
 
     // Master Category CRUD
     Route::get(EndPoints::master_category_list,     [MasterCategoryController::class, 'index']);
@@ -84,6 +88,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // Stock Ledger (History)
     Route::get(EndPoints::stock_ledger_list, [StockLedgerController::class, 'index']);
+
+    // Dashboard
+    Route::get(EndPoints::dashboard, [DashboardController::class, 'index']);
 });
 
 // Middleware Fallback Routes

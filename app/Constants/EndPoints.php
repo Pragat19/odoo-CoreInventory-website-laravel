@@ -19,10 +19,10 @@ class EndPoints
     const user_forgotPasswordCustom = '/user/forgotPasswordCustom';
     const user_adminUsers = '/user/adminUsers';
     const user_detail = '/user/detail';
-    const user_profile = '/user/profile';
+    const user_profile        = '/user/profile';
     const user_changePassword = '/user/changePassword';
-    const user_updateProfile = '/user/updateProfile';
-    const user_logout = '/user/logout';
+    const user_updateProfile  = '/user/updateProfile';
+    const user_logout         = '/user/logout';
     const user_list = '/user/list';
     const user_activeUsers = '/user/activeUsers';
     const user_newUsers = '/user/newUsers';
@@ -126,6 +126,13 @@ class EndPoints
      * ========================================================================
      */
     const stock_ledger_list = '/stock-ledger/list';
+
+    /**
+     * ========================================================================
+     * Dashboard Services
+     * ========================================================================
+     */
+    const dashboard = '/dashboard';
 
     /**
      * ========================================================================
