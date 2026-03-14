@@ -31,6 +31,39 @@ class EndPoints
 
     /**
      * ========================================================================
+     * Master Category Services
+     * ========================================================================
+     */
+    const master_category_list   = '/master-category/list';
+    const master_category_store  = '/master-category/store';
+    const master_category_show   = '/master-category/show/{id}';
+    const master_category_update = '/master-category/update/{id}';
+    const master_category_delete = '/master-category/delete/{id}';
+
+    /**
+     * ========================================================================
+     * Master Unit Services
+     * ========================================================================
+     */
+    const master_unit_list   = '/master-unit/list';
+    const master_unit_store  = '/master-unit/store';
+    const master_unit_show   = '/master-unit/show/{id}';
+    const master_unit_update = '/master-unit/update/{id}';
+    const master_unit_delete = '/master-unit/delete/{id}';
+
+    /**
+     * ========================================================================
+     * Product Services
+     * ========================================================================
+     */
+    const product_list   = '/product/list';
+    const product_store  = '/product/store';
+    const product_show   = '/product/show/{id}';
+    const product_update = '/product/update/{id}';
+    const product_delete = '/product/delete/{id}';
+
+    /**
+     * ========================================================================
      * Middeleware Route
      * ========================================================================
      */
